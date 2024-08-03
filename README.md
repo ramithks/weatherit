@@ -1,4 +1,4 @@
-# Weather it.
+![logo](https://github.com/user-attachments/assets/832b3fa4-f4aa-418d-bb38-ea7ffa4b3a05)
 
 This project is a weather application built using Flutter. It follows the principles of Domain-Driven Design (DDD) and uses the BLoC architecture for managing business logic. The app includes features like Firebase Authentication, local storage of authentication states, and weather data fetching from a weather API.
 
