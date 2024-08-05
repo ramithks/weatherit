@@ -90,19 +90,6 @@ weatherit/
 │   │   ├── dependency_injection.dart
 │   │   └── environment_config.dart
 │   └── main.dart
-├── test/
-│   ├── domain/
-│   │   └── usecases/
-│   │       ├── fetch_weather_test.dart
-│   │       └── sign_in_test.dart
-│   ├── application/
-│   │   └── blocs/
-│   │       ├── auth_bloc_test.dart
-│   │       └── weather_bloc_test.dart
-│   └── infrastructure/
-│       └── repositories/
-│           ├── weather_repository_impl_test.dart
-│           └── auth_repository_impl_test.dart
 ├── pubspec.yaml
 ├── README.md
 ```
