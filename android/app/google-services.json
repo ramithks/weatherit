@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "809075074588",
+    "project_id": "weatherit-1b791",
+    "storage_bucket": "weatherit-1b791.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:809075074588:android:cf07900b80c3e96562e1d9",
+        "android_client_info": {
+          "package_name": "com.example.weatherit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCct3GLlXT8zIAaNovmgK7XyUUqS-izH0k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
