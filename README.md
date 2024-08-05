@@ -14,77 +14,97 @@ This project is a weather application built using Flutter, following the princip
 - Error handling for network requests and data retrieval failures
 - Local storage of the last fetched weather info, displayed in case of network errors
 - Ability to enter a location or select from a predefined list to view the weather
-- Splash screen
-- Auth screens for signup and sign-in
-- Home screen with weather info display and sign-out button
-- Separate screen for selecting or entering a new location
 
 ## Project Structure
 
-The project follows a Domain-Driven Design architecture:
+The project follows a simplified Domain-Driven Design architecture:
 
 ```
 weatherit/
 ├── lib/
+│   ├── core/
+│   │   ├── error/
+│   │   │   ├── error_handler.dart
+│   │   │   └── failures.dart
+│   │   ├── network/
+│   │   │   └── network_info.dart
+│   │   └── utils/
+│   │       └── constants.dart
 │   ├── domain/
 │   │   ├── entities/
 │   │   │   ├── weather.dart
-│   │   │   ├── user.dart
-│   │   │   └── location.dart
-│   │   └── repositories/
-│   │       ├── weather_repository.dart
-│   │       ├── auth_repository.dart
-│   │       └── location_repository.dart
-│   ├── application/
+│   │   │   ├── location.dart
+│   │   │   └── user.dart
+│   │   ├── repositories/
+│   │   │   ├── weather_repository.dart
+│   │   │   ├── auth_repository.dart
+│   │   │   └── location_repository.dart
 │   │   └── usecases/
-│   │       ├── get_weather.dart
+│   │       ├── fetch_weather.dart
+│   │       ├── get_current_location.dart
 │   │       ├── sign_in.dart
 │   │       ├── sign_up.dart
-│   │       ├── sign_out.dart
-│   │       ├── get_current_location.dart
-│   │       └── select_location.dart
+│   │       └── sign_out.dart
+│   ├── application/
+│   │   ├── blocs/
+│   │   │   ├── auth/
+│   │   │   │   ├── auth_bloc.dart
+│   │   │   │   ├── auth_event.dart
+│   │   │   │   └── auth_state.dart
+│   │   │   ├── weather/
+│   │   │   │   ├── weather_bloc.dart
+│   │   │   │   ├── weather_event.dart
+│   │   │   │   └── weather_state.dart
+│   │   │   └── location/
+│   │   │       ├── location_bloc.dart
+│   │   │       ├── location_event.dart
+│   │   │       └── location_state.dart
 │   ├── infrastructure/
 │   │   ├── data_sources/
-│   │   │   ├── weather_api_service.dart
-│   │   │   ├── firebase_auth_service.dart
-│   │   │   └── local_storage_service.dart
-│   │   ├── models/
-│   │   │   ├── weather_model.dart
-│   │   │   ├── user_model.dart
-│   │   │   └── location_model.dart
-│   │   └── repositories_impl/
-│   │       ├── weather_repository_impl.dart
-│   │       ├── auth_repository_impl.dart
-│   │       └── location_repository_impl.dart
+│   │   │   ├── weather_api.dart
+│   │   │   ├── local_storage.dart
+│   │   │   └── firebase_auth_source.dart
+│   │   ├── repositories/
+│   │   │   ├── weather_repository_impl.dart
+│   │   │   ├── auth_repository_impl.dart
+│   │   │   └── location_repository_impl.dart
+│   │   ├── services/
+│   │   │   ├── location_service.dart
+│   │   │   └── connectivity_service.dart
+│   │   └── models/
+│   │       ├── weather_model.dart
+│   │       └── location_model.dart
 │   ├── presentation/
-│   │   ├── bloc/
-│   │   │   ├── auth_bloc.dart
-│   │   │   ├── weather_bloc.dart
-│   │   │   └── location_bloc.dart
-│   │   ├── pages/
-│   │   │   ├── splash_page.dart
+│   │   ├── screens/
+│   │   │   ├── splash_screen.dart
 │   │   │   ├── auth/
-│   │   │   │   ├── sign_in_page.dart
-│   │   │   │   └── sign_up_page.dart
-│   │   │   ├── home_page.dart
-│   │   │   └── location_selection_page.dart
-│   │   └── widgets/
-│   │       ├── weather_info_widget.dart
-│   │       └── error_widget.dart
-│   ├── core/
-│   │   ├── error/
-│   │   │   └── exceptions.dart
-│   │   └── util/
-│   │       └── input_converter.dart
-│   ├── injection_container.dart
+│   │   │   │   ├── sign_in_screen.dart
+│   │   │   │   └── sign_up_screen.dart
+│   │   │   ├── home_screen.dart
+│   │   │   └── location_selection_screen.dart
+│   │   ├── widgets/
+│   │   │   ├── weather_info_widget.dart
+│   │   │   └── location_list_item.dart
+│   │   └── routes.dart
+│   ├── config/
+│   │   ├── dependency_injection.dart
+│   │   └── environment_config.dart
 │   └── main.dart
 ├── test/
 │   ├── domain/
+│   │   └── usecases/
+│   │       ├── fetch_weather_test.dart
+│   │       └── sign_in_test.dart
 │   ├── application/
-│   ├── infrastructure/
-│   └── presentation/
+│   │   └── blocs/
+│   │       ├── auth_bloc_test.dart
+│   │       └── weather_bloc_test.dart
+│   └── infrastructure/
+│       └── repositories/
+│           ├── weather_repository_impl_test.dart
+│           └── auth_repository_impl_test.dart
 ├── pubspec.yaml
-└── README.md
+├── README.md
 ```
 
 ## Getting Started
@@ -100,46 +120,34 @@ weatherit/
 
 1. Clone the repository:
 
-   ```
-   git clone https://github.com/your-repo/weatherit.git
-   cd weatherit
-   ```
+```bash
+git clone https://github.com/your-repo/weatherit.git
+cd weatherit
+```
 
 2. Install dependencies:
 
-   ```
-   flutter pub get
-   ```
+```bash
+flutter pub get
+```
 
-3. Configure Firebase:
+3. Configure Firebase and set up your Weather API key.
 
-   - Follow the official [Firebase setup guide](https://firebase.google.com/docs/flutter/setup) to configure your Firebase project.
+4. Run the app:
 
-4. Set up Weather API:
-
-   - Sign up for a weather API service and obtain an API key.
-   - Update the `weather_api_service.dart` file with your API key.
-
-5. Initialize Hive for local storage:
-   - In your `main.dart` file, add:
-     ```dart
-     await Hive.initFlutter();
-     await Hive.openBox('authBox');
-     await Hive.openBox('weatherBox');
-     ```
+```bash
+flutter run
+```
 
 ## Dependencies
 
-- flutter_bloc: ^8.1.3
-- dio: ^5.3.2
-- get_it: ^7.6.0
-- auto_route: ^7.8.0
-- hive: ^2.2.3
-- hive_flutter: ^1.1.0
-- firebase_auth: ^4.7.3
-- firebase_core: ^2.15.1
-- geolocator: ^10.0.0
-- equatable: ^2.0.5
+- flutter_bloc: for BLoC implementation
+- dio: for HTTP requests
+- get_it: for dependency injection
+- auto_route: for navigation
+- hive: for local database
+- firebase_auth: for authentication
+- geolocator: for getting device location
 
 ## Documentation and Code Quality
 
